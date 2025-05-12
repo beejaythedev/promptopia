@@ -14,40 +14,47 @@ const handler = NextAuth({
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         }),
     ],
-    async session({ session }) {
-        const sessionUser = await User.findOne({
-            email: session.user.email,
-        });
+    debug: true,
 
-        session.user.id = sessionUser._id.toString(); // Convert ObjectId to string
-        return session; // Return the updated session object
-    },
-    async signIn({ profile }) {
-        // Every Next Js route is a serverless route
-        try{
-            await connectToDB(); // Connect to the database
-
-            // Check if a user already exists in the database
-            const userExists = await User.findOne({
-                email: profile.email,
+    callbacks: {
+        async session({ session }) {
+            const sessionUser = await User.findOne({
+                email: session.user.email,
             });
-
-            // If not, create a new user in the database
-            if(!userExists){
-                await User.create({
+    
+            session.user.id = sessionUser._id.toString(); // Convert ObjectId to string
+            return session; // Return the updated session object
+        },
+       
+        async signIn({ profile }) {
+            // Every Next Js route is a serverless route
+            try{
+                await connectToDB(); // Connect to the database
+    
+                // Check if a user already exists in the database
+                const userExists = await User.findOne({
                     email: profile.email,
-                    username: profile.name.replace(" ", "").toLowerCase(),
-                    image: profile.picture,
-                })
-             // If user exists, return true to allow sign in
-             return true
+                });
+    
+                // If not, create a new user in the database
+                if(!userExists){
+                    await User.create({
+                        email: profile.email,
+                        username: profile.name.replace(" ", "").toLowerCase(),
+                        image: profile.picture,
+                    })
+               
+                }
+
+                return true; // Allow sign in
+            }
+            catch (error) {
+                console.log("Error in signIn", error);
+                return false;
             }
         }
-        catch (error) {
-            console.log("Error in signIn", error);
-            return false;
-        }
     }
+    
 })
 
 export { handler as GET, handler as POST}

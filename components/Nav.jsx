@@ -33,7 +33,7 @@ const Nav = () => {
                 <div className='flex gap-3 md:gap-5'>
                     <Link href='/create-prompt' className='black_btn border border-black py-2 px-5 rounded-full text-white bg-black'>Create Post</Link>
 
-                    <button type='button' onClick={signOut} className='outline_btn border py-e px-5 rounded-full'>Sign Out</button>
+                    <button type='button' onClick={signOut} className='outline_btn border py-e px-5 rounded-full cursor-pointer'>Sign Out</button>
 
                     <Link href='/profile'>
                         <Image src={session?.user.image} width={37}
@@ -45,7 +45,7 @@ const Nav = () => {
             ): (
                 <>
                     {providers && Object.values(providers).map((provider) => (
-                        <button type='button' key={provider.name} onClick={() => signIn(provider.id)} className='black_btn border border-black py-2 px-5 rounded-full text-white bg-black'>Sign In</button>
+                        <button type='button' key={provider.name} onClick={() => signIn(provider.id)} className='black_btn border border-black py-2 px-5 rounded-full text-white bg-black cursor-pointer'>Sign In</button>
                     ))}
                 </>
             )}
@@ -56,7 +56,7 @@ const Nav = () => {
        <div className='sm:hidden flex items-center relative'>
             {session?.user ? (
                 <div className=''>
-                    <Image src="/assets/images/logo.svg"
+                    <Image src={session?.user.image}
                         width={37}
                         height={37}
                         className='rounded-full'

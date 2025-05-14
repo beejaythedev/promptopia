@@ -15,6 +15,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete}) => {
         }, 3000)
     }
 
+
   return (
     <div className='prompt_card rounded-md w-5/6 mx-auto mb-5 border p-4'>
         <div className='flex justify-between items-start gap-5'>
@@ -48,8 +49,27 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete}) => {
             className='font-inter text-sm blue_gradient cursor-pointer text-left'
             onClick={() => handleTagClick && handleTagClick(post.tag)}
         >
-            {post.tag}
+            #{post.tag}
         </p>
+
+        <div className='mt-5 flex justify-center gap-4 border-t border-gray-100 pt-3'>
+            {handleEdit && (
+                <p 
+                    className='font-inter text-sm green_gradient cursor-pointer'
+                    onClick={handleEdit}
+                >
+                    Edit
+                </p>
+            )}
+            {handleDelete && (
+                <p 
+                    className='font-inter text-sm orange_gradient cursor-pointer'
+                    onClick={handleDelete}
+                >
+                    Delete
+                </p>
+            )}
+        </div>
     </div>
   )
 }

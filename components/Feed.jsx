@@ -40,7 +40,7 @@ const Feed = () => {
 
   return (
   <section className='feed w-full mt-10 '>
-    <form className='relative w-full flex-center'>
+    <form className='relative w-2/4 m-auto flex-center'>
       <input 
         type="text"
         placeholder='Search for a tag or username'
